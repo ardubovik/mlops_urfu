@@ -1,0 +1,94 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Setup environment') {
+            steps {
+                script {
+                    echo 'creating a virtual environment, if not already created'
+                    sh '''
+                        if [ ! -d ".venv" ]; then
+                            env_name=${1:-".venv"}
+                            python3 -m venv "$env_name"
+                            echo "virtual environment '$env_name' has been created"
+                        fi
+                    '''
+
+                    echo 'activating virtual environment'
+                    sh '''
+                        env_name=${1:-".venv"}
+                        if [ ! -d "$env_name" ]; then
+                            echo "virtual environment '$env_name' not found, use '$0 create [env_name]' to create"
+                            return 1
+                        fi
+                        if [ -z "$VIRTUAL_ENV" ]; then
+                            chmod +x ./$env_name/bin/activate
+                            ./$env_name/bin/activate
+                            echo "virtual environment '$env_name' is activated"
+                        else
+                            echo "virtual environment has already been activated"
+                        fi
+                    '''
+
+                    echo 'install dependencies'
+                    sh '''
+                        if [ ! -f "lab2/requirements.txt" ]; then
+                            echo "file requirements.txt not found"
+                            return 1
+                        fi
+
+                        # check if all dependencies from requirements.txt are installed
+                        for package in $(cat lab2/requirements.txt | cut -d '=' -f 1); do
+                            if ! pip freeze | grep -q "^$package=="; then
+                                echo "dependency installation:.."
+                                pip install -r lab2/requirements.txt
+                                echo "dependencies installed"
+                                return 0
+                            fi
+                        done
+                        echo "all dependencies are already installed"
+                    '''
+                }
+            }
+        }
+        stage('Generate train and test dataset') {
+            steps {
+                echo 'start generate datasets'
+                sh 'python lab2/src/data_creation.py'
+                echo 'finish generate datasets'
+            }
+        }
+        stage('Data preprocessing') {
+            steps {
+                echo 'start data preprocessing'
+                sh 'python lab2/src/model_preprocessing.py'
+                echo 'finish data preprocessing'
+            }
+        }
+        stage('Create and train model') {
+            steps {
+                echo 'start create and train model'
+                sh 'python lab2/src/model_preporation.py'
+                echo 'finish create and train model'
+            }
+        }
+        stage('Test model') {
+            steps {
+                echo 'start testing model'
+                sh 'python lab2/src/model_testing.py'
+                echo 'finish testing model'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Pipeline has finished.'
+        }
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
