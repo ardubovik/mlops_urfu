@@ -39,6 +39,7 @@ pipeline {
                         for package in $(cat lab2/requirements.txt | cut -d '=' -f 1); do
                             if ! pip3 freeze | grep -q "^$package=="; then
                                 echo "dependency installation:.."
+                                user jenkins
                                 pip3 install -r lab2/requirements.txt
                                 echo "dependencies installed"
                                 return 0
