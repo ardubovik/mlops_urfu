@@ -42,7 +42,7 @@ pipeline {
                         for package in $(cat lab2/requirements.txt | cut -d '=' -f 1); do
                             if ! pip3 freeze | grep -q "^$package=="; then
                                 echo "Dependency installation..."
-                                ./$env_name/bin/pip3 install -r lab2/requirements.txt
+                                .venv/bin/pip3 install -r lab2/requirements.txt
                                 echo "Dependencies installed."
                                 return 0
                             fi
