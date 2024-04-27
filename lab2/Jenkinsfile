@@ -4,6 +4,8 @@ pipeline {
     stages {
         stage('Setup environment') {
             steps {
+                sh 'python3 -m venv lab2/env'
+                sh 'source lab2/env/bin/activate'
                 sh 'pip install -r lab2/requirements.txt'
             }
         }
