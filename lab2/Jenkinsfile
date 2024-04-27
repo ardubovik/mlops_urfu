@@ -5,28 +5,28 @@ pipeline {
         stage('Generate train and test dataset') {
             steps {
                 echo 'start generate datasets'
-                sh 'python lab2/src/data_creation.py'
+                sh 'python3 lab2/src/data_creation.py'
                 echo 'finish generate datasets'
             }
         }
         stage('Data preprocessing') {
             steps {
                 echo 'start data preprocessing'
-                sh 'python lab2/src/model_preprocessing.py'
+                sh 'python3 lab2/src/model_preprocessing.py'
                 echo 'finish data preprocessing'
             }
         }
         stage('Create and train model') {
             steps {
                 echo 'start create and train model'
-                sh 'python lab2/src/model_preporation.py'
+                sh 'python3 lab2/src/model_preporation.py'
                 echo 'finish create and train model'
             }
         }
         stage('Test model') {
             steps {
                 echo 'start testing model'
-                sh 'python lab2/src/model_testing.py'
+                sh 'python3 lab2/src/model_testing.py'
                 echo 'finish testing model'
             }
         }
