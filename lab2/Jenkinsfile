@@ -15,7 +15,7 @@ pipeline {
                 sh './venv/bin/activate'
                 sh 'pip3 list'
                 echo '---------------------'
-                sh 'python3 -m pip install -r lab2/requirements.txt'
+                sh 'python3 -m pip install -r lab2/requirements.txt --break-system-packages'
                 echo "Dependencies installed."
             }
         }
