@@ -46,7 +46,7 @@ pipeline {
                                 return 0
                             fi
                         done
-
+                        ls
                         echo "All dependencies are already installed."
                     '''
                 }
