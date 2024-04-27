@@ -36,7 +36,7 @@ pipeline {
         stage('Create and train model') {
             steps {
                 echo 'start create and train model'
-                sh 'python3 lab2/src/model_preporation.py'
+                sh 'python3 lab2/src/model_preparation.py'
                 echo 'finish create and train model'
             }
         }
