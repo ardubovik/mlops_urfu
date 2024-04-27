@@ -37,9 +37,9 @@ pipeline {
                             return 1
                         fi
                         for package in $(cat lab2/requirements.txt | cut -d '=' -f 1); do
-                            if ! pip freeze | grep -q "^$package=="; then
+                            if ! pip3 freeze | grep -q "^$package=="; then
                                 echo "dependency installation:.."
-                                pip install -r lab2/requirements.txt
+                                pip3 install -r lab2/requirements.txt
                                 echo "dependencies installed"
                                 return 0
                             fi
