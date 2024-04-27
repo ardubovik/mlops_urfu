@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('AAAAAAAAAAAAAAAAAAAAAA') {
             steps {
+                sh 'cat /usr/share/doc/python3.11/README.venv'
                 sh 'pip3 list'
                 echo '---------------------'
                 echo "Dependency installation..."
