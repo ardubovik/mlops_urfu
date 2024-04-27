@@ -32,7 +32,7 @@ pipeline {
 
                     echo 'install dependencies'
                     sh '''
-                        ls
+                        cat lab2/requirements.txt
                     '''
                 }
             }
