@@ -10,7 +10,7 @@ pipeline {
                 sh 'python3 -m venv venv'
                 sh 'ls'
                 echo '---------------------'
-                sh 'chmod + x venv/bin/activate'
+                sh 'chmod +x venv/bin/activate'
                 sh './venv/bin/activate'
                 sh 'pip3 list'
                 echo '---------------------'
