@@ -7,7 +7,7 @@ pipeline {
                 sh 'pip3 list'
                 echo '---------------------'
                 echo "Dependency installation..."
-                sh 'python3 -m venv .venv'
+                sh 'python3 -m venv venv'
                 sh 'ls'
                 echo '---------------------'
                 sh './venv/bin/activate'
