@@ -2,41 +2,65 @@ pipeline {
     agent any
 
     stages {
-        stage('AAAAAAAAAAAAAAAAAAAAAA') {
-            steps {
+        stage('Setup environment') {
+            script {
+                echo '---------------------'
                 sh 'pip3 list'
                 echo '---------------------'
-                sh 'ls'
-                echo "Dependency installation..."
-                sh 'pip3 install -r lab2/requirements.txt'
-                echo "Dependencies installed."
+                echo 'Creating a virtual environment, if not already created'
+                sh '''
+                    if [ ! -d ".venv" ]; then
+                        env_name=${1:-".venv"}
+                        python3 -m venv "$env_name"
+                        echo "The virtual environment '$env_name' has been created."
+                    fi
+                '''
+
+                echo 'Activating the virtual environment'
+                sh '''
+                    env_name=${1:-".venv"}
+                    if [ ! -d "$env_name" ]; then
+                        echo "Virtual environment '$env_name' not found. Use '$0 create [env_name]' to create."
+                        return 1
+                    fi
+                    if [ -z "$VIRTUAL_ENV" ]; then
+                        chmod +x ./$env_name/bin/activate
+                        ./$env_name/bin/activate
+                        echo "Virtual environment '$env_name' is activated."
+                    else
+                        echo "The virtual environment has already been activated."
+                    fi
+                '''
+                echo '---------------------'
+                sh 'pip3 list'
+                echo '---------------------'
             }
         }
         stage('Generate train and test dataset') {
             steps {
                 echo 'start generate datasets'
-                sh 'python3 lab2/src/data_creation.py'
+                sh 'python lab2/src/data_creation.py'
                 echo 'finish generate datasets'
             }
         }
         stage('Data preprocessing') {
             steps {
                 echo 'start data preprocessing'
-                sh 'python3 lab2/src/model_preprocessing.py'
+                sh 'python lab2/src/model_preprocessing.py'
                 echo 'finish data preprocessing'
             }
         }
         stage('Create and train model') {
             steps {
                 echo 'start create and train model'
-                sh 'python3 lab2/src/model_preporation.py'
+                sh 'python lab2/src/model_preporation.py'
                 echo 'finish create and train model'
             }
         }
         stage('Test model') {
             steps {
                 echo 'start testing model'
-                sh 'python3 lab2/src/model_testing.py'
+                sh 'python lab2/src/model_testing.py'
                 echo 'finish testing model'
             }
         }
