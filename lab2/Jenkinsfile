@@ -4,9 +4,6 @@ pipeline {
     stages {
         stage('Setup environment') {
             script {
-                echo '---------------------'
-                sh 'pip3 list'
-                echo '---------------------'
                 echo 'Creating a virtual environment, if not already created'
                 sh '''
                     if [ ! -d ".venv" ]; then
@@ -31,9 +28,13 @@ pipeline {
                         echo "The virtual environment has already been activated."
                     fi
                 '''
-                echo '---------------------'
+            }
+        }
+        stage('Generate train and test dataset') {
+            steps {
+                echo 'start generate datasets'
                 sh 'pip3 list'
-                echo '---------------------'
+                echo 'finish generate datasets'
             }
         }
         stage('Generate train and test dataset') {
