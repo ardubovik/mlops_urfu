@@ -36,7 +36,7 @@ pipeline {
                             echo "file requirements.txt not found"
                             return 1
                         fi
-                        python3 -m pip install --upgrade pip
+                        apt install python3-pip
                         for package in $(cat lab2/requirements.txt | cut -d '=' -f 1); do
                             if ! python3 -m pip freeze | grep -q "^$package=="; then
                                 echo "dependency installation:.."
