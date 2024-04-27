@@ -41,7 +41,7 @@ pipeline {
                         for package in $(cat requirements.txt | cut -d '=' -f 1); do
                             if ! pip freeze | grep -q "^$package=="; then
                                 echo "dependency installation:.."
-                                pip install -r requirements.txt
+                                ls
                                 echo "dependencies installed"
                                 return 0
                             fi
@@ -49,34 +49,6 @@ pipeline {
                         echo "all dependencies are already installed"
                     '''
                 }
-            }
-        }
-        stage('Generate train and test dataset') {
-            steps {
-                echo 'start generate datasets'
-                sh 'python lab2/src/data_creation.py'
-                echo 'finish generate datasets'
-            }
-        }
-        stage('Data preprocessing') {
-            steps {
-                echo 'start data preprocessing'
-                sh 'python lab2/src/model_preprocessing.py'
-                echo 'finish data preprocessing'
-            }
-        }
-        stage('Create and train model') {
-            steps {
-                echo 'start create and train model'
-                sh 'python lab2/src/model_preporation.py'
-                echo 'finish create and train model'
-            }
-        }
-        stage('Test model') {
-            steps {
-                echo 'start testing model'
-                sh 'python lab2/src/model_testing.py'
-                echo 'finish testing model'
             }
         }
     }
