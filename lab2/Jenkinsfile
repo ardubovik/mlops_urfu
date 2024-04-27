@@ -36,7 +36,6 @@ pipeline {
                             echo "file requirements.txt not found"
                             return 1
                         fi
-
                         for package in $(cat lab2/requirements.txt | cut -d '=' -f 1); do
                             if ! pip3 freeze | grep -q "^$package=="; then
                                 echo "dependency installation:.."
