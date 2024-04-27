@@ -24,7 +24,7 @@ pipeline {
                         if [ -z "$VIRTUAL_ENV" ]; then
                             chmod +x ./$env_name/bin/activate
                             ./$env_name/bin/activate
-                            ls
+                            ls -la
                             echo "Virtual environment '$env_name' is activated."
                         else
                             echo "The virtual environment has already been activated."
