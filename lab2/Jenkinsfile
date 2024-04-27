@@ -32,16 +32,16 @@ pipeline {
 
                     echo 'install dependencies'
                     sh '''
-                        if [ ! -f "lab2/requirements.txt" ]; then
+                        if [ ! -f "requirements.txt" ]; then
                             echo "file requirements.txt not found"
                             return 1
                         fi
 
                         # check if all dependencies from requirements.txt are installed
-                        for package in $(cat lab2/requirements.txt | cut -d '=' -f 1); do
+                        for package in $(cat requirements.txt | cut -d '=' -f 1); do
                             if ! pip freeze | grep -q "^$package=="; then
                                 echo "dependency installation:.."
-                                pip install -r lab2/requirements.txt
+                                pip install -r requirements.txt
                                 echo "dependencies installed"
                                 return 0
                             fi
