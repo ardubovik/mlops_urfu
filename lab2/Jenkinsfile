@@ -36,7 +36,6 @@ pipeline {
                             echo "file requirements.txt not found"
                             return 1
                         fi
-                        // check if all dependencies from requirements.txt are installed
                         for package in $(cat lab2/requirements.txt | cut -d '=' -f 1); do
                             if ! pip freeze | grep -q "^$package=="; then
                                 echo "dependency installation:.."
