@@ -13,17 +13,39 @@ pipeline {
                             echo "Virtual environment '$env_name' has been created."
                         fi
                     '''
-                    echo 'Activating the virtual environment'
+                    echo 'Activating virtual environment'
                     sh '''
                         env_name=${1:-".venv"}
-                        chmod +x ./$env_name/bin/activate
-                        ./$env_name/bin/activate
+                        if [ ! -d "$env_name" ]; then
+                            echo "Virtual environment '$env_name' not found"
+                            return 1
+                        fi
+                        if [ -z "$VIRTUAL_ENV" ]; then
+                            chmod +x ./$env_name/bin/activate
+                            ./$env_name/bin/activate
+                            echo "Virtual environment '$env_name' is activated."
+                        else
+                            echo "Virtual environment has already been activated."
+                        fi
                     '''
                     echo 'Dependency installation'
                     sh '''
                         env_name=${1:-".venv"}
-                        $env_name/bin/pip3 install -r lab2/requirements.txt
-                        echo "Dependencies installed."
+                        if [ ! -f "lab2/requirements.txt" ]; then
+                            echo "File requirements.txt not found."
+                            return 1
+                        fi
+
+                        # Check if all dependencies from requirements.txt are installed
+                        for package in $(cat lab2/requirements.txt | cut -d '=' -f 1); do
+                            if ! $env_name/bin/pip3 freeze | grep -q "^$package=="; then
+                                echo "Dependency installation"
+                                $env_name/bin/pip3 install -r lab2/requirements.txt
+                                echo "Dependencies installed."
+                                return 0
+                            fi
+                        done
+                        echo "All dependencies are installed."
                     '''
                 }
             }
