@@ -8,3 +8,4 @@
 ### Практическое задание №2: `lab2`
 
 - [Описание lab2](lab2/README.md)
+- [Файл запуска bash скрипта](lab2/scripts/docker_build.sh)
