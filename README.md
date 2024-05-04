@@ -9,3 +9,8 @@
 
 - [Описание lab2](lab2/README.md)
 - [Файл запуска bash скрипта](lab2/scripts/docker_build.sh)
+
+### Практическое задание №3: `lab3`
+
+- [Описание lab3](lab3/README.md)
+- [Файл запуска docker-compose.yml файла](lab3/docker-compose.yml)
