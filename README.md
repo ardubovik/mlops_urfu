@@ -14,3 +14,7 @@
 
 - [Описание lab3](lab3/README.md)
 - [Файл запуска docker-compose.yml файла](lab3/docker-compose.yml)
+
+### Практическое задание 4№: `lab4`
+
+- [Описание lab3](lab4/README.md)
