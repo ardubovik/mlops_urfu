@@ -8,6 +8,7 @@ def main():
 
     # modification dataset
     titanic_df = titanic_df[['Pclass', 'Sex', 'Age']]
+    titanic_df['Pclass'][0:10] = 2
 
     # save dataset
     titanic_df.to_csv('../datasets/titanic.csv', index=False)
