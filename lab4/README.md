@@ -57,7 +57,7 @@ dvc pull
 - datasets.dvc - хеш наблюдаемого объекта
 - .gitignore - правила игнорирования отслеживания файлов в git
 
-### Запуск: в директории lab4/
+### Запуск: в директории lab4/src/
 
 ```
 python3 dataset_creator.py
